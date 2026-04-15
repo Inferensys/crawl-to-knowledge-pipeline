@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://inferensys.github.io/crawl-to-knowledge-pipeline/knowledge-record.schema.json",
+  "title": "KnowledgeRecord",
+  "type": "object",
+  "required": [
+    "record_id",
+    "run_id",
+    "canonical_url",
+    "title",
+    "content",
+    "as_of",
+    "content_hash_sha256"
+  ],
+  "properties": {
+    "record_id": {
+      "type": "string"
+    },
+    "run_id": {
+      "type": "string"
+    },
+    "canonical_url": {
+      "type": "string",
+      "format": "uri"
+    },
+    "source_id": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "content": {
+      "type": "string",
+      "minLength": 1
+    },
+    "section_path": {
+      "type": "string"
+    },
+    "as_of": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "content_hash_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "delta_class": {
+      "type": "string",
+      "enum": [
+        "new",
+        "updated",
+        "unchanged"
+      ]
+    }
+  },
+  "additionalProperties": false
+}

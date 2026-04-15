@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://inferensys.github.io/crawl-to-knowledge-pipeline/crawl-run.schema.json",
+  "title": "CrawlRun",
+  "type": "object",
+  "required": [
+    "run_id",
+    "manifest_id",
+    "manifest_revision",
+    "status",
+    "started_at",
+    "counters"
+  ],
+  "properties": {
+    "run_id": {
+      "type": "string"
+    },
+    "manifest_id": {
+      "type": "string"
+    },
+    "manifest_revision": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "running",
+        "completed",
+        "completed_with_errors",
+        "failed"
+      ]
+    },
+    "started_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "ended_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "counters": {
+      "type": "object",
+      "required": [
+        "fetched",
+        "new",
+        "updated",
+        "deleted",
+        "unchanged",
+        "errors"
+      ],
+      "properties": {
+        "fetched": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "new": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "updated": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "deleted": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "unchanged": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "errors": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}
