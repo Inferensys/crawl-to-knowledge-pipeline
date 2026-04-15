@@ -1,0 +1,12 @@
+{
+  "record_id": "kr_71849c80f3",
+  "run_id": "crawl-2026-04-15T09:20:00Z",
+  "canonical_url": "https://docs.example.com/guides/authentication/service-accounts",
+  "source_id": "docs",
+  "title": "Service Accounts",
+  "content": "Service accounts can be provisioned using the admin API. Tokens are scoped by project and support rotation...",
+  "section_path": "Guides/Authentication/Service Accounts",
+  "as_of": "2026-04-15T09:23:10Z",
+  "content_hash_sha256": "9c4bfd4a7737d9f47b8bc31057209943557aa89e16bd9f64e014f558040f3e69",
+  "delta_class": "updated"
+}

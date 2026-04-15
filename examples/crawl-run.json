@@ -1,0 +1,16 @@
+{
+  "run_id": "crawl-2026-04-15T09:20:00Z",
+  "manifest_id": "support-docs-primary",
+  "manifest_revision": 7,
+  "status": "completed_with_errors",
+  "started_at": "2026-04-15T09:20:00Z",
+  "ended_at": "2026-04-15T09:23:10Z",
+  "counters": {
+    "fetched": 384,
+    "new": 6,
+    "updated": 18,
+    "deleted": 1,
+    "unchanged": 359,
+    "errors": 3
+  }
+}

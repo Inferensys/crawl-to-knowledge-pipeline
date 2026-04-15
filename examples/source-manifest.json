@@ -1,0 +1,27 @@
+{
+  "manifest_id": "support-docs-primary",
+  "revision": 7,
+  "sources": [
+    {
+      "source_id": "docs",
+      "seed_url": "https://docs.example.com/",
+      "allowed_prefixes": [
+        "https://docs.example.com/guides/",
+        "https://docs.example.com/api/"
+      ],
+      "extractor": "html_main",
+      "priority_tier": 1,
+      "rate_limit_rps": 2
+    },
+    {
+      "source_id": "changelog",
+      "seed_url": "https://docs.example.com/changelog/",
+      "allowed_prefixes": [
+        "https://docs.example.com/changelog/"
+      ],
+      "extractor": "html_main",
+      "priority_tier": 0,
+      "rate_limit_rps": 1
+    }
+  ]
+}
