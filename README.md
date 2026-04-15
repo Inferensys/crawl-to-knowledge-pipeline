@@ -1,6 +1,6 @@
 # crawl-to-knowledge-pipeline
 
-Reference repository for maintaining a live knowledge graph from web and docs sources using crawl manifests, canonicalization, and delta snapshots.
+FastAPI service for maintaining a live knowledge graph from web and docs sources using crawl manifests, canonicalization, and delta snapshots.
 
 Primary output of this project is not a chatbot. It is a reproducible crawl data product with strict freshness metadata.
 
@@ -20,14 +20,16 @@ Source Registry -> Frontier Builder -> Fetchers -> Content Normalizer -> Delta D
 
 Architecture details: [`docs/architecture.md`](./docs/architecture.md)
 
-## First Pass
+## Current implementation
 
-Walk the repository in this order:
+The first slice is a deterministic crawl simulator:
 
-1. Open [`examples/source-manifest.json`](./examples/source-manifest.json) to see how source policy, rate limits, and canonicalization are pinned.
-2. Inspect [`examples/crawl-run.json`](./examples/crawl-run.json) for run-level counters and failure accounting.
-3. Inspect [`examples/knowledge-record.json`](./examples/knowledge-record.json) for the retrieval-ready export shape.
-4. Use [`docs/runbook.md`](./docs/runbook.md) to reason about cadence, retries, and partial-run handling.
+- `POST /api/crawls` accepts a manifest and creates a completed crawl run
+- URLs are canonicalized before record generation and diffing
+- generated records are compared against the previous run for the same manifest
+- `GET /api/crawls/{run_id}` returns run metadata and counters
+- `GET /api/sources` lists manifests observed by the service
+- `POST /api/exports/build` returns the retrieval-ready knowledge package for a run
 
 ## Contracts
 
@@ -41,21 +43,77 @@ Example artifacts:
 - [`examples/crawl-run.json`](./examples/crawl-run.json)
 - [`examples/knowledge-record.json`](./examples/knowledge-record.json)
 
-## API / Worker Surface
+## Project layout
 
-- `POST /api/crawls` create crawl run from manifest revision
-- `GET /api/crawls/{run_id}` crawl status, counters, and failure set
-- `POST /api/freshness/check` compare current snapshot with prior run
-- `POST /api/exports/build` emit retrieval-ready knowledge package
-- `GET /api/sources` list source definitions and policy tags
+```text
+.
+├── docs/
+│   ├── architecture.md
+│   ├── implementation-plan.md
+│   └── runbook.md
+├── src/crawl_to_knowledge_pipeline/
+│   ├── canonicalize.py
+│   ├── main.py
+│   ├── models.py
+│   ├── service.py
+│   ├── simulator.py
+│   └── store.py
+├── tests/
+│   └── test_api.py
+├── schemas/
+└── examples/
+```
+
+## Run locally
+
+Prerequisites:
+
+- Python 3.9
+- `uv`
+
+```bash
+uv sync --extra dev
+uv run uvicorn crawl_to_knowledge_pipeline.main:app --app-dir src --reload
+```
+
+## Test
+
+```bash
+uv run pytest -q
+```
+
+## Example flow
+
+Create a run:
+
+```bash
+curl -X POST http://127.0.0.1:8000/api/crawls \
+  -H "Content-Type: application/json" \
+  -d @examples/source-manifest.json
+```
+
+Fetch run metadata:
+
+```bash
+curl http://127.0.0.1:8000/api/crawls/<run_id>
+```
+
+Build export:
+
+```bash
+curl -X POST http://127.0.0.1:8000/api/exports/build \
+  -H "Content-Type: application/json" \
+  -d '{"run_id":"<run_id>"}'
+```
 
 ## Operational Notes
 
-- Use separate queues for `seed-discovery` and `content-fetch`.
-- Enforce per-domain rate limits and robots policy checks at fetch time.
-- Keep raw fetch payloads for reproducible extraction and parser regression tests.
+- Canonicalization strips `utm_*`, `gclid`, `fbclid`, fragments, and redundant trailing slashes.
+- Revision changes can yield both `updated` and `unchanged` records in the same run.
+- Storage is in-memory for this slice; restart clears manifests and run history.
 
 Detailed runbook notes are in [`docs/runbook.md`](./docs/runbook.md).
+
 
 ## Demo Assets
 
