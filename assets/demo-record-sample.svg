@@ -1,0 +1,31 @@
+<svg width="1180" height="620" viewBox="0 0 1180 620" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1180" height="620" rx="24" fill="#0E1116"/>
+  <rect x="32" y="32" width="1116" height="556" rx="18" fill="#151A23" stroke="#323A4D"/>
+  <circle cx="76" cy="72" r="7" fill="#FF5F57"/>
+  <circle cx="100" cy="72" r="7" fill="#FEBC2E"/>
+  <circle cx="124" cy="72" r="7" fill="#28C840"/>
+  <text x="160" y="78" fill="#D8E1F7" font-family="SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="22">demo/output/export-v1.json</text>
+  <text x="64" y="126" fill="#A6B7DB" font-family="SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="21">{</text>
+  <text x="96" y="164" fill="#88D0FF" font-family="SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="20">"canonical_url"</text>
+  <text x="270" y="164" fill="#D8E1F7" font-family="SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="20">: </text>
+  <text x="296" y="164" fill="#FFD580" font-family="SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="20">"https://modelcontextprotocol.io/specification/2025-06-18/server/tools"</text>
+  <text x="96" y="202" fill="#88D0FF" font-family="SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="20">"title"</text>
+  <text x="182" y="202" fill="#D8E1F7" font-family="SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="20">: </text>
+  <text x="208" y="202" fill="#FFD580" font-family="SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="20">"MCP Tools (Server)"</text>
+  <text x="96" y="240" fill="#88D0FF" font-family="SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="20">"section_path"</text>
+  <text x="254" y="240" fill="#D8E1F7" font-family="SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="20">: </text>
+  <text x="280" y="240" fill="#FFD580" font-family="SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="20">"Specification/2025-06-18/Server/Tools"</text>
+  <text x="96" y="278" fill="#88D0FF" font-family="SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="20">"delta_class"</text>
+  <text x="242" y="278" fill="#D8E1F7" font-family="SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="20">: </text>
+  <text x="268" y="278" fill="#FFD580" font-family="SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="20">"new"</text>
+  <text x="96" y="326" fill="#88D0FF" font-family="SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="20">"content"</text>
+  <text x="196" y="326" fill="#D8E1F7" font-family="SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="20">: </text>
+  <text x="222" y="326" fill="#BFD0F5" font-family="SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="19">"Summary: MCP servers can expose externally-invokable tools</text>
+  <text x="96" y="356" fill="#BFD0F5" font-family="SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="19">(APIs, DB queries, computations). Each tool has a unique name</text>
+  <text x="96" y="386" fill="#BFD0F5" font-family="SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="19">and metadata describing its schema. Tools are model-controlled,</text>
+  <text x="96" y="416" fill="#BFD0F5" font-family="SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="19">but implementations should keep a human-in-the-loop for trust</text>
+  <text x="96" y="446" fill="#BFD0F5" font-family="SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="19">&amp; safety. Servers advertise capabilities, clients list tools via</text>
+  <text x="96" y="476" fill="#BFD0F5" font-family="SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="19">JSON-RPC, and results may carry structured content, text, image,</text>
+  <text x="96" y="506" fill="#BFD0F5" font-family="SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="19">audio, resource links, and embedded resources ..."</text>
+  <text x="64" y="556" fill="#A6B7DB" font-family="SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="21">}</text>
+</svg>

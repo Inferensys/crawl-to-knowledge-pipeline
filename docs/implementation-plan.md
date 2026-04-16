@@ -1,23 +1,54 @@
-# Implementation Plan
+# Extension Plan
 
-## Objective
+The current repo is intentionally small. The next useful additions are obvious and separate.
 
-Build a runnable crawl control plane that exercises manifest parsing, canonicalization, run counters, delta classification, and export generation without requiring a real crawler.
+## 1. Persist Runs
 
-## v1 Scope
+Replace `InMemoryCrawlStore` with a durable store that keeps:
 
-- FastAPI service with in-memory manifests, runs, and generated records
-- deterministic record generation from manifest inputs
-- URL canonicalization and previous-run diffing
-- run, sources, and export endpoints
-- API tests covering canonicalization-driven dedupe, update classification, and export assembly
+- manifests by revision
+- per-run metadata
+- record snapshots by canonical URL
+- per-URL error details
 
-## Module split
+Without this, the API is useful for demos and tests but not for recurring jobs.
 
-- `models.py`: manifests, runs, counters, records, and export contracts
-- `canonicalize.py`: URL normalization rules
-- `simulator.py`: synthetic fetch/extract pipeline and delta classification
-- `store.py`: in-memory persistence
-- `service.py`: run orchestration and export assembly
-- `main.py`: HTTP endpoints and error mapping
+## 2. Move Crawl Execution Off The Request Thread
 
+`POST /api/crawls` currently performs the whole run inline. That keeps the flow readable, but it is the wrong shape for larger frontiers.
+
+Next step:
+
+- accept the manifest
+- enqueue the run
+- stream progress through a run table or event log
+
+## 3. Add Frontier Expansion
+
+Keep the current bounded manifest mode, then add optional expansion stages for:
+
+- sitemaps
+- API pagination
+- directory indexes
+
+Do not mix expansion with diff logic. Expansion decides what to fetch. The delta engine decides what changed.
+
+## 4. Publish Downstream
+
+The export package is already shaped for downstream systems. The next adapters should be:
+
+- embedding batch writer
+- object storage snapshot publisher
+- index sync worker
+
+## 5. Add Provider Backends Without Touching The Delta Layer
+
+The contract is already in `extractor_backend.py`.
+
+Add:
+
+- `OpenAIExtractionBackend`
+- `VertexExtractionBackend`
+- `AnthropicExtractionBackend`
+
+Keep `content_hash_sha256` local and deterministic regardless of provider.

@@ -1,60 +1,93 @@
-# Crawl Operations Runbook
+# Runbook
 
-This document captures execution policy for recurring crawl runs and knowledge snapshot generation.
+## Choosing Provider Mode
 
-## Crawl Cadence
+Use deterministic mode when you need:
 
-- Tier 0 sources (release notes, incident docs): every 15 minutes
-- Tier 1 sources (product docs, API refs): every 2 hours
-- Tier 2 sources (blogs, long-form articles): daily
+- fast local development
+- stable tests
+- API contract work
+- canonicalization debugging
 
-Crawl cadence must be configured per source manifest, not as a global setting.
+Use Azure mode when you need:
 
-## Source Admission Checklist
+- dense export text instead of clipped local extracts
+- retrieval-ready record content
+- realistic demo artifacts
 
-Before adding a new source:
+Switch with:
 
-- verify robots policy and legal terms
-- choose extractor policy (`html_main`, `markdown_native`, `api_json`)
-- set canonical domain and allowed path prefixes
-- configure priority tier and rate limit
+```bash
+export CRAWL_TO_KNOWLEDGE_PROVIDER=deterministic
+```
 
-## Freshness and Diff Policy
+or:
 
-For each crawl run:
+```bash
+export CRAWL_TO_KNOWLEDGE_PROVIDER=azure
+```
 
-1. Compute normalized content hash per canonical URL.
-2. Compare against last successful run.
-3. Emit change class:
-   - `new`
-   - `updated`
-   - `deleted`
-   - `unchanged`
-4. Push only delta set to downstream indexing jobs.
+## Source Admission Rules
 
-## Canonicalization Rules
+Before adding a source:
 
-- force lowercase scheme + host
-- strip known tracking query params (`utm_*`, `gclid`, `fbclid`)
-- trim trailing slash except root
-- fragment identifiers are ignored for dedupe
+- make the frontier explicit in `allowed_prefixes`
+- choose the extractor deliberately: `html_main`, `markdown_native`, or `api_json`
+- verify that the pages are fetchable without interactive auth
+- keep the manifest small enough that one run still tells a coherent story
 
-Canonicalization must be deterministic and versioned. If rules change, bump `canonicalizer_version`.
+If you need large-scale discovery, build that upstream and feed this service resolved URLs.
 
-## Failure Budget and Retry
+## Reading Run Counters
 
-- network timeout retry: 2 attempts with exponential backoff
-- 4xx responses: no retry, mark as terminal
-- 5xx responses: retry until budget limit
-- parser failures: isolate URL and continue run
+- `new`: canonical URL did not exist in the previous snapshot
+- `updated`: canonical URL existed and the stable local content hash changed
+- `unchanged`: canonical URL existed and the stable local content hash matched
+- `deleted`: reserved for future manifests that explicitly drop prior URLs
+- `errors`: fetch or extraction failures that were isolated without failing the full run
 
-Run status should become `completed_with_errors` when errors remain under threshold.
+In Azure mode, `updated` is still based on the local hash, not on the model text.
 
-## Export Integrity
+## Latency Expectations
 
-Before publishing a knowledge package:
+The live extractor path is network-bound and model-bound.
 
-- assert manifest revision pin
-- assert full source coverage or emit explicit partial-run flag
-- attach crawl watermark timestamp (`as_of`)
-- include checksum for each exported record payload
+Observed on the checked-in MCP demo:
+
+- 2-page run: about 77 seconds
+- 3-page run: about 122 seconds
+
+Treat the live path as a quality path, not a high-throughput crawler. If throughput matters:
+
+- pre-expand the frontier elsewhere
+- batch work outside the request thread
+- cache fetch bodies and model outputs
+- move export text generation to an async stage
+
+## Failure Handling
+
+Current behavior:
+
+- fetch and extraction errors increment `errors`
+- the run still completes if at least part of the frontier succeeded
+- the final run status becomes `completed_with_errors` when `errors > 0`
+
+Recommended next production steps:
+
+- persist raw fetch payloads for replay
+- record structured error reasons per URL
+- retry transient 5xx and timeout paths outside the request lifecycle
+- emit metrics for error rate and crawl duration
+
+## Regenerating The Demo
+
+```bash
+export CRAWL_TO_KNOWLEDGE_PROVIDER=azure
+export AZURE_OPENAI_ENDPOINT="https://<resource>.openai.azure.com/"
+export AZURE_OPENAI_API_KEY="<key>"
+export AZURE_OPENAI_EXTRACT_DEPLOYMENT="gpt-5-mini"
+
+uv run python scripts/run_live_demo.py
+```
+
+Artifacts land in `demo/output/`.

@@ -1,0 +1,56 @@
+{
+  "run": {
+    "run_id": "crawl_7be166de89e2",
+    "manifest_id": "mcp-server-spec-demo",
+    "manifest_revision": 2,
+    "status": "completed",
+    "started_at": "2026-04-16T04:28:18.429516Z",
+    "ended_at": "2026-04-16T04:30:20.359733Z",
+    "counters": {
+      "fetched": 3,
+      "new": 1,
+      "updated": 0,
+      "deleted": 0,
+      "unchanged": 2,
+      "errors": 0
+    }
+  },
+  "records": [
+    {
+      "record_id": "kr_e4c8226ad0e4",
+      "run_id": "crawl_7be166de89e2",
+      "canonical_url": "https://modelcontextprotocol.io/specification/2025-06-18/server/tools",
+      "source_id": "mcp-server-spec",
+      "title": "Model Context Protocol - Tools",
+      "content": "Summary: MCP servers can expose model-invokable tools (unique name + metadata/schema). Tools are model-controlled but implementations may choose any UI pattern; security best-practice is a human-in-the-loop with visible indicators and confirmation prompts.\nCapabilities: Servers MUST declare tools capability in capabilities object. Example: { \"capabilities\": { \"tools\": { \"listChanged\": true } } }. The boolean listChanged signals whether server emits notifications when the available tool list changes.\nDiscovery (Listing Tools): Clients discover tools with tools/list. The request supports pagination. Example request: { \"jsonrpc\": \"2.0\", \"id\": 1, \"method\": \"tools/list\", \"params\": { \"cursor\": \"optional-cursor-value\" } }.\nInvocation model: Tools are uniquely identified by name and include schema metadata. Models may automatically discover and invoke tools based on context. Servers SHOULD provide UI showing exposed tools, visual indicators when invoked, and confirmation prompts for operations requiring human approval.\nNotifications: listChanged indicates presence of list-change notifications; servers that set it true will emit notifications for changes to available tools.\nMessage flow & protocol: MCP uses JSON-RPC style messages for listing and invocations (example above). Tool-related messages include listing, calling/invoking tools, result messages, and changed notifications. The protocol supports pagination and structured parameters and responses.\nData types (named types used in Tools section): Tool (name, metadata/schema), ToolResult (result payload and content type), TextContent, ImageContent, AudioContent, ResourceLinks, EmbeddedResources, StructuredContent, OutputSchema, Error handling types.\nContent types: Tool results may include text, images, audio, resource links, embedded resources, and structured content conforming to declared output schemas.\nError handling: Tools must surface errors in structured form; clients and models should handle invocation failures and present them to users with context and UI affordances for retry/denial.\nSecurity considerations & UX: Servers SHOULD ensure human oversight; provide clear UI about exposed tools and prompts to confirm operations. Models controlling tools require trust & safety controls; servers may restrict or gate tool capabilities.\nNotes: MCP does not mandate a single user interaction model; implementations can expose tools through any interface pattern that suits them. The Tools capability integrates with the broader MCP lifecycle, transports, and authorization mechanisms described elsewhere in the specification.",
+      "section_path": "Specification/2025-06-18/Server/Tools",
+      "as_of": "2026-04-16T04:28:18.429516Z",
+      "content_hash_sha256": "22017b86f1b089a57732d530ecdb22dfcdfe619145130c22c9c5b609fcc71951",
+      "delta_class": "unchanged"
+    },
+    {
+      "record_id": "kr_fb24fbf0063c",
+      "run_id": "crawl_7be166de89e2",
+      "canonical_url": "https://modelcontextprotocol.io/specification/2025-06-18/server/resources",
+      "source_id": "mcp-server-spec",
+      "title": "Resources",
+      "content": "Overview: The Model Context Protocol (MCP) standardizes how servers expose resources to clients. Resources are uniquely identified by a URI and provide contextual data for language models (examples: files, database schemas, application-specific information).\n\nUser Interaction Model: MCP is application-driven; hosts decide how to surface resources. Common patterns include: exposing resources via UI elements (tree/list), allowing search and filtering, and automatic context inclusion based on heuristics or model selection. The protocol does not mandate a specific UI/interaction.\n\nCapabilities: Servers that support resources MUST declare the resources capability in their capabilities object. The resources capability supports two optional boolean features:\n- subscribe: whether the client can subscribe to be notified of changes to individual resources.\n- listChanged: whether the server will emit notifications when the list of available resources changes.\nBoth flags are optional; servers may support neither, either, or both.\n\nExamples:\n{ \"capabilities\": { \"resources\": { \"subscribe\": true, \"listChanged\": true } } }\n{ \"capabilities\": { \"resources\": {} } }  // Neither feature supported\n{ \"capabilities\": { \"resources\": { \"subscribe\": true } } }  // Only subscribe supported\n\nPrimary Sections in Specification (topics covered): Listing Resources; Reading Resources; Resource Templates; List Changed Notification; Subscriptions; Message Flow; Data Types; Resource; Resource Contents (Text Content, Binary Content); Annotations; Common URI Schemes (https://, file://, git://, custom schemes); Error Handling; Security Considerations.\n\nOperational notes and constraints (explicit from spec):\n- Each resource MUST be uniquely identified by a URI.\n- Resources are intended to provide context to language models and can represent a variety of content types (text, binary, annotated data, etc.).\n- Servers must advertise their supported resource-related features via the capabilities declaration so clients can adapt behavior (e.g., whether to subscribe or listen for list-changed events).\n\nThis record summarizes the Server/Resources section of the MCP Specification (version 2025-06-18).",
+      "section_path": "Specification/2025 06 18/Server/Resources",
+      "as_of": "2026-04-16T04:28:18.429516Z",
+      "content_hash_sha256": "cd597ef01b76bc37a6b256393a01a98e4c179d3f53295b8ef18904d35707eaf5",
+      "delta_class": "unchanged"
+    },
+    {
+      "record_id": "kr_f7058ec25b46",
+      "run_id": "crawl_7be166de89e2",
+      "canonical_url": "https://modelcontextprotocol.io/specification/2025-06-18/server/prompts",
+      "source_id": "mcp-server-spec",
+      "title": "Prompts",
+      "content": "Source: Model Context Protocol (MCP) specification version 2025-06-18 \u2014 Server features: Prompts. Purpose: provides a standardized way for servers to expose prompt templates to clients; prompts are structured messages/instructions that clients can discover, retrieve, and customize via arguments.\nUser interaction model: Prompts are user-controlled (intended for explicit user selection, e.g., slash commands) but the protocol does not mandate any specific UI pattern; implementors may expose prompts via any appropriate interface.\nCapabilities declaration: servers that support prompts MUST advertise capability during initialization. Example: { \"capabilities\": { \"prompts\": { \"listChanged\": true } } }\n- listChanged: boolean indicating whether server will emit notifications when the available prompts list changes.\nProtocol messages \u2014 Listing prompts:\n- Method: \"prompts/list\"\n- Request JSON-RPC example: { \"jsonrpc\": \"2.0\", \"id\": 1, \"method\": \"prompts/list\", \"params\": { \"cursor\": \"optional-cursor-value\" } }\n- Pagination: operation supports pagination; clients may pass an optional cursor string in params to page through results.\n- Response JSON-RPC example: { \"jsonrpc\": \"2.0\", \"id\": 1, \"result\": { \"prompts\": [ { \"name\": \"code_review\", \"title\": \"Request Code Review\", \"description\": \"Asks the LLM to analyze code quality and suggest ...\" } ] } }\nData surface: prompts expose metadata (e.g., name, title, description) and content types. Clients retrieve prompt contents and provide arguments to customize prompts.\nTypes and sections referenced: Prompt, PromptMessage, Text Content, Image Content, Audio Content, Embedded Resources, Error Handling, Implementation Considerations, Security. (These sections define message flow, content payload shapes, embedded resource handling, and error semantics \u2014 see spec for full schemas and examples.)\nOperational notes: servers MUST declare support via capabilities block; clients should handle pagination and optional cursor; clients should subscribe or listen for listChanged notifications when capability indicates true; prompts are intended to be discovered and triggered by explicit user actions.\nSpec URL: https://modelcontextprotocol.io/specification/2025-06-18/server/prompts",
+      "section_path": "Specification/2025 06 18/Server/Prompts",
+      "as_of": "2026-04-16T04:28:18.429516Z",
+      "content_hash_sha256": "6844f1b9d54d8238f67a584c9a54d2d978925e81cee9319917b922eead71504a",
+      "delta_class": "new"
+    }
+  ]
+}

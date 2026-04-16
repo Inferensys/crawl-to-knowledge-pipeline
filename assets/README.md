@@ -1,18 +1,8 @@
-# Demo Assets
+# Assets
 
-Use this directory for operational screenshots tied to crawler behavior.
+Checked-in render assets for the README:
 
-## Suggested Captures
+- `demo-run-summary.svg`: live run counters and timing from `demo/output/demo-summary.json`
+- `demo-record-sample.svg`: exported record excerpt from `demo/output/export-v1.json`
 
-- `frontier-queue-health.png`
-  - queue depth by crawl stage (`discovery`, `fetch`, `normalize`, `delta`)
-- `delta-summary-run.png`
-  - per-run counts for `new`, `updated`, `deleted`, `unchanged`
-- `canonicalization-debug.png`
-  - raw URL -> canonical URL transform examples
-
-## Capture Guidelines
-
-- Prefer dashboards with absolute timestamps visible.
-- Keep one capture set per manifest revision.
-- Remove any private hostnames or credentials from request traces.
+They are intentionally static. When the demo artifacts change materially, regenerate or edit the SVGs so the README still matches the checked-in output.

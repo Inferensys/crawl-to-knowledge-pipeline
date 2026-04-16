@@ -1,0 +1,16 @@
+{
+  "run_id": "crawl_3e34e37508c2",
+  "manifest_id": "mcp-server-spec-demo",
+  "manifest_revision": 1,
+  "status": "completed",
+  "started_at": "2026-04-16T04:27:01.652733Z",
+  "ended_at": "2026-04-16T04:28:18.422787Z",
+  "counters": {
+    "fetched": 2,
+    "new": 2,
+    "updated": 0,
+    "deleted": 0,
+    "unchanged": 0,
+    "errors": 0
+  }
+}

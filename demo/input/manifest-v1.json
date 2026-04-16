@@ -1,0 +1,16 @@
+{
+  "manifest_id": "mcp-server-spec-demo",
+  "revision": 1,
+  "sources": [
+    {
+      "source_id": "mcp-server-spec",
+      "seed_url": "https://modelcontextprotocol.io/specification/2025-06-18/server/tools",
+      "allowed_prefixes": [
+        "https://modelcontextprotocol.io/specification/2025-06-18/server/resources"
+      ],
+      "extractor": "html_main",
+      "priority_tier": 1,
+      "rate_limit_rps": 2
+    }
+  ]
+}

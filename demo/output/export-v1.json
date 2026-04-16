@@ -1,0 +1,44 @@
+{
+  "run": {
+    "run_id": "crawl_3e34e37508c2",
+    "manifest_id": "mcp-server-spec-demo",
+    "manifest_revision": 1,
+    "status": "completed",
+    "started_at": "2026-04-16T04:27:01.652733Z",
+    "ended_at": "2026-04-16T04:28:18.422787Z",
+    "counters": {
+      "fetched": 2,
+      "new": 2,
+      "updated": 0,
+      "deleted": 0,
+      "unchanged": 0,
+      "errors": 0
+    }
+  },
+  "records": [
+    {
+      "record_id": "kr_e4c8226ad0e4",
+      "run_id": "crawl_3e34e37508c2",
+      "canonical_url": "https://modelcontextprotocol.io/specification/2025-06-18/server/tools",
+      "source_id": "mcp-server-spec",
+      "title": "MCP Tools (Server)",
+      "content": "Summary: The Model Context Protocol (MCP) allows servers to expose tools that language models can discover and invoke to interact with external systems (databases, APIs, computations). Each tool is uniquely identified by a name and exposes metadata that describes its schema.\n\nUser interaction: Tools are designed to be model-controlled (models can discover and invoke tools automatically), but implementations may expose tools via any interface pattern. For trust & safety, a human SHOULD be in the loop with the ability to deny tool invocations. Implementation SHOULD provide UI that clearly shows exposed tools, visual indicators when tools are invoked, and confirmation prompts for operations.\n\nCapabilities declaration: Servers that support tools MUST declare the tools capability in their capabilities object. Example: { \"capabilities\": { \"tools\": { \"listChanged\": true } } }\n- listChanged: boolean that indicates whether the server will emit notifications when the available tool list changes.\n\nListing tools (discovery): Clients discover tools via the JSON-RPC method tools/list. The operation supports pagination.\n- Request example (JSON-RPC):\n  { \"jsonrpc\": \"2.0\", \"id\": 1, \"method\": \"tools/list\", \"params\": { \"cursor\": \"optional-cursor-value\" } }\n- Response: standard JSON-RPC response including results; servers MAY include pagination cursor values in responses.\n\nMessage flows & operations: The specification defines message flows for tool listing, calling tools, and list-changed notifications. It defines data types used in those flows (Tool, Tool Result, Text Content, Image Content, Audio Content, Resource Links, Embedded Resources, Structured Content, Output Schema) and includes guidance on error handling and security considerations.\n\nTool schema and results: Tools expose metadata describing input/output schema. Tool invocation returns a Tool Result that can include structured content, text, images, audio, resource links, and embedded resources. Output schema definitions enable clients and models to validate and parse results.\n\nSecurity & safety: Servers SHOULD keep a human in the loop and provide UI affordances to make tool invocation transparent. The spec includes security considerations and error handling guidelines for tool invocation and result processing.\n\nNotes: This record captures server-side Tools behavior as of MCP version 2025-06-18: discovery via tools/list (paginated), mandatory capability declaration for tool support, listChanged notification semantics, model-controlled invocation model, UI/confirmation recommendations, and a typed result model for tool outputs.",
+      "section_path": "Specification/2025-06-18/Server/Tools",
+      "as_of": "2026-04-16T04:27:01.652733Z",
+      "content_hash_sha256": "22017b86f1b089a57732d530ecdb22dfcdfe619145130c22c9c5b609fcc71951",
+      "delta_class": "new"
+    },
+    {
+      "record_id": "kr_fb24fbf0063c",
+      "run_id": "crawl_3e34e37508c2",
+      "canonical_url": "https://modelcontextprotocol.io/specification/2025-06-18/server/resources",
+      "source_id": "mcp-server-spec",
+      "title": "Resources",
+      "content": "Purpose: MCP servers expose \"resources\"\u2014server-provided context items (files, DB schemas, application-specific data) that clients/models may use. Identification: Each resource is uniquely identified by a URI. User interaction model: Application-driven; MCP does not mandate UI patterns. Implementations may present resources via explicit selection (tree/list), search/filter, or automatic inclusion heuristics; any interface is allowed. Declared capability: Servers that support resources MUST declare a resources capability in their capabilities document. Example full feature declaration: { \"capabilities\": { \"resources\": { \"subscribe\": true, \"listChanged\": true } } } Optional feature flags: - subscribe: whether a client can subscribe to notifications about changes to individual resources. - listChanged: whether the server emits notifications when the set/list of available resources changes. Either flag may be omitted; server may support neither, one, or both. Example minimal/partial declarations: { \"capabilities\": { \"resources\": {} } } // Neither feature supported { \"capabilities\": { \"resources\": { \"subscribe\": true } } } // Only subscribe supported Notes: - Resources expose context for language models; servers decide which resources to expose and how. - Resource contents and metadata, operations for listing/reading resources, resource templates, list-changed notifications, subscription flow, message flow, resource data types (Resource, ResourceContents), content forms (text, binary), annotations, error handling, and security considerations are enumerated in the Resources section of the specification (sections listed below). Common URI schemes mentioned: https://, file://, git://, and custom URI schemes. Sections present on the page (index): User Interaction Model; Capabilities; Protocol Messages; Listing Resources; Reading Resources; Resource Templates; List Changed Notification; Subscriptions; Message Flow; Data Types; Resource; Resource Contents; Text Content; Binary Content; Annotations; Common URI Schemes; Error Handling; Security Considerations.",
+      "section_path": "Specification/2025 06 18/Server/Resources",
+      "as_of": "2026-04-16T04:27:01.652733Z",
+      "content_hash_sha256": "cd597ef01b76bc37a6b256393a01a98e4c179d3f53295b8ef18904d35707eaf5",
+      "delta_class": "new"
+    }
+  ]
+}

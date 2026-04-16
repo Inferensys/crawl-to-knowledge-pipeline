@@ -1,0 +1,43 @@
+<svg width="1180" height="560" viewBox="0 0 1180 560" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1180" height="560" rx="24" fill="#0B1020"/>
+  <rect x="32" y="32" width="1116" height="496" rx="18" fill="#10172A" stroke="#27324A"/>
+  <circle cx="76" cy="72" r="7" fill="#FF5F57"/>
+  <circle cx="100" cy="72" r="7" fill="#FEBC2E"/>
+  <circle cx="124" cy="72" r="7" fill="#28C840"/>
+  <text x="160" y="78" fill="#C9D5F0" font-family="SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="22">demo/output/demo-summary.json</text>
+  <text x="64" y="130" fill="#8BA4D8" font-family="SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="21">[</text>
+  <text x="92" y="166" fill="#E5ECFF" font-family="SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="20">{</text>
+  <text x="124" y="202" fill="#77D9A8" font-family="SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="20">"name"</text>
+  <text x="220" y="202" fill="#C9D5F0" font-family="SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="20">: </text>
+  <text x="246" y="202" fill="#FFD580" font-family="SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="20">"v1"</text>
+  <text x="124" y="236" fill="#77D9A8" font-family="SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="20">"manifest_id"</text>
+  <text x="290" y="236" fill="#C9D5F0" font-family="SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="20">: </text>
+  <text x="316" y="236" fill="#FFD580" font-family="SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="20">"mcp-server-spec-demo"</text>
+  <text x="124" y="270" fill="#77D9A8" font-family="SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="20">"duration_seconds"</text>
+  <text x="360" y="270" fill="#C9D5F0" font-family="SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="20">: 76.77</text>
+  <text x="124" y="304" fill="#77D9A8" font-family="SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="20">"fetched"</text>
+  <text x="232" y="304" fill="#C9D5F0" font-family="SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="20">: 2,</text>
+  <text x="300" y="304" fill="#77D9A8" font-family="SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="20">"new"</text>
+  <text x="372" y="304" fill="#C9D5F0" font-family="SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="20">: 2,</text>
+  <text x="440" y="304" fill="#77D9A8" font-family="SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="20">"unchanged"</text>
+  <text x="584" y="304" fill="#C9D5F0" font-family="SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="20">: 0,</text>
+  <text x="652" y="304" fill="#77D9A8" font-family="SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="20">"errors"</text>
+  <text x="760" y="304" fill="#C9D5F0" font-family="SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="20">: 0</text>
+  <text x="92" y="340" fill="#E5ECFF" font-family="SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="20">},</text>
+  <text x="92" y="384" fill="#E5ECFF" font-family="SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="20">{</text>
+  <text x="124" y="420" fill="#77D9A8" font-family="SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="20">"name"</text>
+  <text x="220" y="420" fill="#C9D5F0" font-family="SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="20">: </text>
+  <text x="246" y="420" fill="#FFD580" font-family="SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="20">"v2"</text>
+  <text x="124" y="454" fill="#77D9A8" font-family="SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="20">"duration_seconds"</text>
+  <text x="360" y="454" fill="#C9D5F0" font-family="SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="20">: 121.93</text>
+  <text x="124" y="488" fill="#77D9A8" font-family="SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="20">"fetched"</text>
+  <text x="232" y="488" fill="#C9D5F0" font-family="SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="20">: 3,</text>
+  <text x="300" y="488" fill="#77D9A8" font-family="SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="20">"new"</text>
+  <text x="372" y="488" fill="#C9D5F0" font-family="SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="20">: 1,</text>
+  <text x="440" y="488" fill="#77D9A8" font-family="SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="20">"unchanged"</text>
+  <text x="584" y="488" fill="#C9D5F0" font-family="SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="20">: 2,</text>
+  <text x="652" y="488" fill="#77D9A8" font-family="SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="20">"errors"</text>
+  <text x="760" y="488" fill="#C9D5F0" font-family="SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="20">: 0</text>
+  <text x="92" y="522" fill="#E5ECFF" font-family="SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="20">}</text>
+  <text x="108" y="548" fill="#8BA4D8" font-family="SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="21">]</text>
+</svg>

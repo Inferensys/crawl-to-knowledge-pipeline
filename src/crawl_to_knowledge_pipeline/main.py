@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from fastapi import FastAPI, HTTPException
 
+from .config import Settings
 from .models import ExportRequest, ExportResponse, SourceManifest
 from .service import CrawlService, RunNotFoundError
 from .store import InMemoryCrawlStore
@@ -9,12 +10,13 @@ from .store import InMemoryCrawlStore
 
 def create_app() -> FastAPI:
     app = FastAPI(title="crawl-to-knowledge-pipeline", version="0.1.0")
-    service = CrawlService(InMemoryCrawlStore())
+    settings = Settings.from_env()
+    service = CrawlService(InMemoryCrawlStore(), settings=settings)
     app.state.crawl_service = service
 
     @app.get("/healthz")
     def healthz():
-        return {"ok": True}
+        return {"ok": True, "provider_mode": settings.provider_mode}
 
     @app.post("/api/crawls")
     def create_run(manifest: SourceManifest):
@@ -42,4 +44,3 @@ def create_app() -> FastAPI:
 
 
 app = create_app()
-

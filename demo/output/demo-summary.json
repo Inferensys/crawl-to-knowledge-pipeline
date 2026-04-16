@@ -1,0 +1,39 @@
+[
+  {
+    "name": "v1",
+    "manifest_id": "mcp-server-spec-demo",
+    "run_id": "crawl_3e34e37508c2",
+    "status": "completed",
+    "provider_mode": "azure",
+    "extract_model": "gpt-5-mini",
+    "duration_seconds": 76.77,
+    "fetched": 2,
+    "new": 2,
+    "updated": 0,
+    "unchanged": 0,
+    "errors": 0,
+    "record_urls": [
+      "https://modelcontextprotocol.io/specification/2025-06-18/server/tools",
+      "https://modelcontextprotocol.io/specification/2025-06-18/server/resources"
+    ]
+  },
+  {
+    "name": "v2",
+    "manifest_id": "mcp-server-spec-demo",
+    "run_id": "crawl_7be166de89e2",
+    "status": "completed",
+    "provider_mode": "azure",
+    "extract_model": "gpt-5-mini",
+    "duration_seconds": 121.93,
+    "fetched": 3,
+    "new": 1,
+    "updated": 0,
+    "unchanged": 2,
+    "errors": 0,
+    "record_urls": [
+      "https://modelcontextprotocol.io/specification/2025-06-18/server/tools",
+      "https://modelcontextprotocol.io/specification/2025-06-18/server/resources",
+      "https://modelcontextprotocol.io/specification/2025-06-18/server/prompts"
+    ]
+  }
+]

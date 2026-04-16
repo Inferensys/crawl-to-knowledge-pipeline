@@ -3,6 +3,9 @@ from __future__ import annotations
 from datetime import datetime, timezone
 from uuid import uuid4
 
+from .config import Settings
+from .extractor_backend import build_extraction_backend
+from .live_crawler import crawl_manifest_records
 from .models import (
     CrawlCounters,
     CrawlRun,
@@ -21,8 +24,10 @@ class RunNotFoundError(RuntimeError):
 
 
 class CrawlService:
-    def __init__(self, store: InMemoryCrawlStore) -> None:
+    def __init__(self, store: InMemoryCrawlStore, settings: Settings | None = None) -> None:
         self._store = store
+        self._settings = settings or Settings.from_env()
+        self._extraction_backend = build_extraction_backend(self._settings)
 
     def create_run(self, manifest: SourceManifest) -> CrawlRun:
         started_at = datetime.now(timezone.utc)
@@ -37,7 +42,19 @@ class CrawlService:
         self._store.save_manifest(manifest)
 
         previous_records = self._store.get_previous_records(manifest.manifest_id)
-        current_records = simulate_manifest_records(manifest, run.run_id, started_at)
+        if self._settings.live_provider_enabled:
+            crawl_result = crawl_manifest_records(
+                manifest=manifest,
+                run_id=run.run_id,
+                as_of=started_at,
+                settings=self._settings,
+                backend=self._extraction_backend,
+            )
+            current_records = crawl_result.records
+            error_count = crawl_result.errors
+        else:
+            current_records = simulate_manifest_records(manifest, run.run_id, started_at)
+            error_count = 0
         classified, delta_counts = classify_delta(current_records, previous_records)
 
         run.counters = CrawlCounters(
@@ -46,7 +63,7 @@ class CrawlService:
             updated=delta_counts["updated"],
             deleted=delta_counts["deleted"],
             unchanged=delta_counts["unchanged"],
-            errors=0,
+            errors=error_count,
         )
         run.ended_at = datetime.now(timezone.utc)
         run.status = (
@@ -75,4 +92,3 @@ class CrawlService:
     def build_export(self, run_id: str) -> ExportResponse:
         run = self.get_run(run_id)
         return ExportResponse(run=run, records=self._store.get_records(run_id))
-
